@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortgage Calculator</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 600px;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4">Mortgage Calculator</h1>
+    <form id="mortgage-form">
+      <div class="form-group">
+        <label for="loan-amount">Loan Amount</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">₹</span>
+          </div>
+          <input type="number" class="form-control" id="loan-amount" placeholder="Enter loan amount" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="interest-rate">Interest Rate (%)</label>
+        <input type="number" class="form-control" id="interest-rate" placeholder="Enter interest rate" required>
+      </div>
+      <div class="form-group">
+        <label for="loan-duration">Loan Duration (years)</label>
+        <input type="number" class="form-control" id="loan-duration" placeholder="Enter loan duration" required>
+      </div>
+      <div class="form-group">
+        <label for="down-payment">Down Payment</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">₹</span>
+          </div>
+          <input type="number" class="form-control" id="down-payment" placeholder="Enter down payment" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Calculate</button>
+    </form>
+    <div class="mt-4" id="result-container" style="display: none;">
+      <h3>Mortgage Details</h3>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Monthly Payment</td>
+            <td id="monthly-payment">₹0</td>
+          </tr>
+          <tr>
+            <td>Total Interest Paid</td>
+            <td id="total-interest">₹0</td>
+          </tr>
+          <tr>
+            <td>Total Cost of Loan</td>
+            <td id="total-cost">₹0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('mortgage-form');
+    const resultContainer = document.getElementById('result-container');
+    const monthlyPayment = document.getElementById('monthly-payment');
+    const totalInterest = document.getElementById('total-interest');
+    const totalCost = document.getElementById('total-cost');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const loanAmount = parseFloat(document.getElementById('loan-amount').value);
+      const interestRate = parseFloat(document.getElementById('interest-rate').value) / 1200; 
+      const loanDuration = parseInt(document.getElementById('loan-duration').value) * 12; 
+      const downPayment = parseFloat(document.getElementById('down-payment').value);
+
+      const principal = loanAmount - downPayment;
+      const monthlyPaymentAmount = principal * interestRate / (1 - Math.pow(1 + interestRate, -loanDuration));
+      const totalInterestAmount = monthlyPaymentAmount * loanDuration - principal;
+      const totalCostAmount = principal + totalInterestAmount;
+
+      monthlyPayment.textContent = `₹${monthlyPaymentAmount.toFixed(2)}`;
+      totalInterest.textContent = `₹${totalInterestAmount.toFixed(2)}`;
+      totalCost.textContent = `₹${totalCostAmount.toFixed(2)}`;
+
+      resultContainer.style.display = 'block';
+    });
+  </script>
+</body>
+</html>

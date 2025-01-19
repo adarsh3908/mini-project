@@ -1,0 +1,204 @@
+
+body {
+   
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+
+#page_title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.list-group-item {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.list-group-item h6 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.list-group-item span {
+    font-size: 1.1rem;
+}
+
+
+#type_of_tax_owed {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#type_of_tax_owed.red {
+    color: red;
+}
+
+#type_of_tax_owed.green {
+    color: green;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+form input, form select, form button {
+    margin-bottom: 15px;
+}
+
+form input, form select {
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+.fas.fa-info-circle {
+    color: #007bff;
+    cursor: pointer;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+footer p {
+    margin-bottom: 0;
+}
+
+footer .list-inline-item a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+footer .list-inline-item a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    #page_title {
+        font-size: 2rem;
+    }
+
+    .col-md-4, .col-md-8 {
+        width: 100%;
+    }
+}
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  h2 {
+    animation: fadeIn 1s ease-in-out;
+  }
+  body {
+    background: linear-gradient(to right, #f6f9f3, #e6e9f0);
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+.btn-primary {
+    background-color: #4dc6e3;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #aae0f6;
+  }
+  
+  .form-control {
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  }
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f0f0f5, #c2c2e3);
+  }
+  
+  h2, h4 {
+    color: #2d2d8f;
+  }
+  
+  button {
+    background-color: #4dc6e3;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #36a7cc;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    background: #2d2d8f;
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+  }
+  
+  .navbar a:hover {
+    text-decoration: underline;
+  }
+  
+  
