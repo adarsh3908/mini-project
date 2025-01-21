@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinCalc Pro - Your Financial Calculator Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --light-bg: #f3f4f6;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        /* Navbar styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .login-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        /* Hero section */
+        .hero {
+            padding-top: 80px;
+            background: linear-gradient(135deg, #f6f8ff 0%, #f0f4ff 100%);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Calculator grid */
+        .calculator-section {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+        }
+
+        .calculator-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .calculator-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.5rem;
+        }
+
+        /* Features section */
+        .features {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #e6f3ff 0%, #f0f0ff 100%);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-color);
+            color: var(--white);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        <!--style for calculator --->
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --light-bg: #f3f4f6;
+            --white: #ffffff;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f6f7ff 0%, #e9eeff 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .step-dot.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .step-dot.completed {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--light-bg);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .info-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 14px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: var(--text-color);
+            color: var(--white);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            width: 250px;
+            display: none;
+            z-index: 10;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 10px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-secondary {
+            background: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        .result-card {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-top: 2rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .total-tax {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            border-top: 2px solid var(--primary-color);
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <i class="fas fa-calculator"></i>
+                FinCalc Pro
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="home.html">Back To Home</a>
+                <a href="#features">Features</a>
+                <a href="#calculators">Calculators</a>
+                <a href="#contact">Contact</a>
+                <a href="#login" class="login-btn">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Smart Financial Planning Starts Here</h1>
+                <p>Access powerful financial calculators to make informed decisions about your money, investments, and
+                    future.</p>
+                <a href="#calculators" class="login-btn">Get Started</a>
+            </div>
+            <div class="hero-image">
+                <!-- Replace src with your actual image -->
+                <img src="https://images.pexels.com/photos/186464/pexels-photo-186464.jpeg"
+                    alt="Financial Planning Dashboard" class="hero-image">
+            </div>
+        </div>
+    </section>
+    <!--claculator-->
+    <div class="container">
+        <div class="header">
+            <h1>Income Tax Calculator 2024-25</h1>
+            <p>Calculate your tax liability in 3 simple steps</p>
+        </div>
+
+        <div class="step-indicator">
+            <div class="step-dot active">1</div>
+            <div class="step-dot">2</div>
+            <div class="step-dot">3</div>
+        </div>
+
+        <!-- Step 1: Basic Details -->
+        <div class="step active" id="step1">
+            <div class="form-group">
+                <label>
+                    Financial Year
+                    <span class="info-icon">i
+                        <span class="tooltip">Select the assessment year for which you want to calculate tax</span>
+                    </span>
+                </label>
+                <select class="form-control" id="financialYear">
+                    <option value="">Select Financial Year</option>
+                    <option value="2024-2025">FY 2024-2025 (Return to be filed between 1st April 2025 - 31st December
+                        2025)</option>
+                    <option value="2023-2024">FY 2023-2024 (Return to be filed between 1st April 2024 - 31st December
+                        2024)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>
+                    Age Group
+                    <span class="info-icon">i
+                        <span class="tooltip">Your age category affects applicable tax slabs</span>
+                    </span>
+                </label>
+                <select class="form-control" id="ageGroup">
+                    <option value="">Select Age Group</option>
+                    <option value="below60">Below 60 years</option>
+                    <option value="60to80">60-80 years</option>
+                    <option value="above80">Above 80 years</option>
+                </select>
+            </div>
+            <div class="btn-container">
+                <button class="btn btn-primary" onclick="nextStep(1)">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Income Details -->
+        <div class="step" id="step2">
+            <div class="form-group">
+                <label>
+                    Income from Salary
+                    <span class="info-icon">i
+                        <span class="tooltip">Include basic salary, HRA, and other allowances</span>
+                    </span>
+                </label>
+                <input type="number" class="form-control" id="salaryIncome">
+            </div>
+            <div class="form-group">
+                <label>
+                    Income from Interest
+                    <span class="info-icon">i
+                        <span class="tooltip">Interest earned from savings accounts, fixed deposits, etc.</span>
+                    </span>
+                </label>
+                <input type="number" class="form-control" id="interestIncome">
+            </div>
+            <div class="form-group">
+                <label>
+                    Rental Income
+                    <span class="info-icon">i
+                        <span class="tooltip">Income received from renting out property</span>
+                    </span>
+                </label>
+                <input type="number" class="form-control" id="rentalIncome">
+            </div>
+            <div class="form-group">
+                <label>
+                    Income from Digital Assets
+                    <span class="info-icon">i
+                        <span class="tooltip">Income from cryptocurrency, NFTs, or other digital assets</span>
+                    </span>
+                </label>
+                <input type="number" class="form-control" id="digitalIncome">
+            </div>
+            <div class="form-group">
+                <label>
+                    Exempt Allowances
+                    <span class="info-icon">i
+                        <span class="tooltip">Allowances exempt from tax under Section 10</span>
+                    </span>
+                </label>
+                <input type="number" class="form-control" id="exemptAllowances">
+            </div>
+            <div class="btn-container">
+                <button class="btn btn-secondary" onclick="prevStep(2)">Previous</button>
+                <button class="btn btn-primary" onclick="nextStep(2)">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Deductions -->
+        <div class="step" id="step3">
+            <div class="form-group">
+                <label>
+                    Basic Deductions - 80C
+                    <span class="info-icon">i
+                        <span class="tooltip">Includes PPF, ELSS, Life Insurance Premium, etc. Max: ₹1,50,000</span>
+                    </span>
+                </label>
+                <input type="number" class="form-control" id="deduction80C">
+            </div>
+            <div class="form-group">
+                <label>
+                    Medical Insurance - 80D
+                    <span class="info-icon">i
+                        <span class="tooltip">Health insurance premium for self, family and parents</span>
+                    </span>
+                </label>
+                <input type="number" class="form-control" id="deduction80D">
+            </div>
+            <div class="form-group">
+                <label>
+                    Interest on Educational Loan - 80E
+                    <span class="info-icon">i
+                        <span class="tooltip">Interest paid on loan taken for higher education</span>
+                    </span>
+                </label>
+                <input type="number" class="form-control" id="deduction80E">
+            </div>
+            <div class="btn-container">
+                <button class="btn btn-secondary" onclick="prevStep(3)">Previous</button>
+                <button class="btn btn-primary" onclick="calculateTax()">Calculate Tax</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="result" style="display: none;">
+            <h2>Tax Calculation Summary</h2>
+            <div class="result-card">
+                <div class="result-item">
+                    <span>Total Income:</span>
+                    <span id="totalIncome">₹0</span>
+                </div>
+                <div class="result-item">
+                    <span>Total Deductions:</span>
+                    <span id="totalDeductions">₹0</span>
+                </div>
+                <div class="result-item">
+                    <span>Taxable Income:</span>
+                    <span id="taxableIncome">₹0</span>
+                </div>
+                <div class="result-item total-tax">
+                    <span>Total Tax Payable:</span>
+                    <span id="taxPayable">₹0</span>
+                </div>
+            </div>
+            <div class="btn-container">
+                <button class="btn btn-primary" onclick="resetCalculator()">Calculate Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calculator Section -->
+    <section id="calculators" class="calculator-section">
+        <h2 class="section-title">Our Other Calculators</h2>
+        <div class="calculator-grid" id="calculatorGrid">
+            <!-- Calculators will be inserted here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2 class="section-title">Why Choose FinCalc Pro?</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <i class="fas fa-tools"></i>
+                <h3>Comprehensive Tools</h3>
+                <p>All your financial calculations in one place, from basic budgeting to complex investment analysis.
+                </p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-chart-line"></i>
+                <h3>Accurate Results</h3>
+                <p>Precise calculations powered by advanced algorithms for better financial planning.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-user-shield"></i>
+                <h3>User-Friendly</h3>
+                <p>Intuitive interface with detailed explanations to make financial planning accessible to everyone.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#press">Press</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#security">Security</a></li>
+                    <li><a href="#updates">Updates</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#documentation">Documentation</a></li>
+                    <li><a href="#status">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#cookies">Cookie Policy</a></li>
+                    <li><a href="#compliance">Compliance</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 FinCalc Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Calculator data
+        const calculators = [
+        {
+                title: "Income Tax Calculator",
+                icon: "fas fa-file-invoice-dollar",
+                iconColor: "#4299e1",
+                description: "Calculate your income tax liability and plan your taxes efficiently"
+            },
+            {
+                title: "Currency Converter",
+                icon: "fas fa-exchange-alt",
+                iconColor: "#48bb78",
+                description: "Convert between different currencies with real-time exchange rates"
+            },
+            {
+                title: "CTC Calculator",
+                icon: "fas fa-briefcase",
+                iconColor: "#9f7aea",
+                description: "Break down your Cost to Company into various components"
+            },
+            {
+                title: "Fixed Deposit Calculator",
+                icon: "fas fa-piggy-bank",
+                iconColor: "#ed8936",
+                description: "Calculate FD maturity amount and interest earnings"
+            },
+            {
+                title: "Retirement Calculator",
+                icon: "fas fa-umbrella-beach",
+                iconColor: "#f56565",
+                description: "Plan your retirement savings and estimate corpus needed"
+            },
+            {
+                title: "SIP Calculator",
+                icon: "fas fa-chart-pie",
+                iconColor: "#38b2ac",
+                description: "Calculate returns on your Systematic Investment Plans"
+            },
+            {
+                title: "Loan Eligibility Calculator",
+                icon: "fas fa-percentage",
+                iconColor: "#ecc94b",
+                description: "Check your loan eligibility based on income and expenses"
+            },
+            {
+                title: "Mortgage Calculator",
+                icon: "fas fa-home",
+                iconColor: "#667eea",
+                description: "Calculate EMI and total interest for your home loan"
+            }
+        ];
+
+        // Function to create calculator cards
+        function createCalculatorCards() {
+            const grid = document.getElementById('calculatorGrid');
+
+            calculators.forEach(calc => {
+                const card = document.createElement('div');
+                card.className = 'calculator-card';
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="icon" style="background-color: ${calc.iconColor}20">
+                            <i class="${calc.icon}" style="color: ${calc.iconColor}"></i>
+                        </span>
+                        <h2 class="card-title">${calc.title}</h2>
+                    </div>
+                    <p class="card-description">${calc.description}</p>
+                `;
+
+                card.addEventListener('click', () => {
+                    // Add navigation logic here
+                    console.log(`Navigating to ${calc.title}`);
+                });
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.navbar-container')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // Initialize calculator cards
+            createCalculatorCards();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            } else {
+                navbar.style.background = 'white';
+                navbar.style.backdropFilter = 'none';
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu after clicking a link
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+            });
+        });
+ //calculator logic
+  // Show tooltips on hover
+  document.querySelectorAll('.info-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                icon.querySelector('.tooltip').style.display = 'block';
+            });
+
+            icon.addEventListener('mouseleave', () => {
+                icon.querySelector('.tooltip').style.display = 'none';
+            });
+        });
+
+        let currentStep = 1;
+
+        function nextStep(step) {
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step + 1}`).classList.add('active');
+
+            const dots = document.querySelectorAll('.step-dot');
+            dots[step - 1].classList.add('completed');
+            dots[step - 1].classList.remove('active');
+            dots[step].classList.add('active');
+
+            currentStep = step + 1;
+        }
+
+        function prevStep(step) {
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step - 1}`).classList.add('active');
+
+            const dots = document.querySelectorAll('.step-dot');
+            dots[step - 1].classList.remove('active');
+            dots[step - 2].classList.remove('completed');
+            dots[step - 2].classList.add('active');
+
+            currentStep = step - 1;
+        }
+
+        function calculateTax() {
+            // Gather all income inputs
+            const salaryIncome = Number(document.getElementById('salaryIncome').value) || 0;
+            const interestIncome = Number(document.getElementById('interestIncome').value) || 0;
+            const rentalIncome = Number(document.getElementById('rentalIncome').value) || 0;
+            const digitalIncome = Number(document.getElementById('digitalIncome').value) || 0;
+            const exemptAllowances = Number(document.getElementById('exemptAllowances').value) || 0;
+
+            // Gather all deductions
+            const deduction80C = Number(document.getElementById('deduction80C').value) || 0;
+            const deduction80D = Number(document.getElementById('deduction80D').value) || 0;
+            const deduction80E = Number(document.getElementById('deduction80E').value) || 0;
+
+            // Calculate totals
+            const totalIncome = salaryIncome + interestIncome + rentalIncome + digitalIncome;
+            const totalDeductions = deduction80C + deduction80D + deduction80E;
+            const taxableIncome = Math.max(totalIncome - totalDeductions - exemptAllowances, 0);
+
+            // Calculate tax based on selected financial year
+            const financialYear = document.getElementById('financialYear').value;
+            const ageGroup = document.getElementById('ageGroup').value;
+            let tax = 0;
+
+            if (financialYear === '2024-2025') {
+                // New tax regime for FY 2024-25
+                if (taxableIncome <= 300000) {
+                    tax = 0;
+                } else if (taxableIncome <= 600000) {
+                    tax = (taxableIncome - 300000) * 0.05;
+                } else if (taxableIncome <= 900000) {
+                    tax = 15000 + (taxableIncome - 600000) * 0.10;
+                } else if (taxableIncome <= 1200000) {
+                    tax = 45000 + (taxableIncome - 900000) * 0.15;
+                } else if (taxableIncome <= 1500000) {
+                    tax = 90000 + (taxableIncome - 1200000) * 0.20;
+                } else {
+                    tax = 150000 + (taxableIncome - 1500000) * 0.30;
+                }
+            } else {
+                // Old tax regime for FY 2023-24
+                if (ageGroup === 'below60') {
+                    if (taxableIncome <= 250000) {
+                        tax = 0;
+                    } else if (taxableIncome <= 500000) {
+                        tax = (taxableIncome - 250000) * 0.05;
+                    } else if (taxableIncome <= 1000000) {
+                        tax = 12500 + (taxableIncome - 500000) * 0.20;
+                    } else {
+                        tax = 112500 + (taxableIncome - 1000000) * 0.30;
+                    }
+                } else if (ageGroup === '60to80') {
+                    if (taxableIncome <= 300000) {
+                        tax = 0;
+                    } else if (taxableIncome <= 500000) {
+                        tax = (taxableIncome - 300000) * 0.05;
+                    } else if (taxableIncome <= 1000000) {
+                        tax = 10000 + (taxableIncome - 500000) * 0.20;
+                    } else {
+                        tax = 110000 + (taxableIncome - 1000000) * 0.30;
+                    }
+                } else { // above80
+                    if (taxableIncome <= 500000) {
+                        tax = 0;
+                    } else if (taxableIncome <= 1000000) {
+                        tax = (taxableIncome - 500000) * 0.20;
+                    } else {
+                        tax = 100000 + (taxableIncome - 1000000) * 0.30;
+                    }
+                }
+            }
+
+            // Add health and education cess (4%)
+            tax = tax + (tax * 0.04);
+
+            // Update the results
+            document.getElementById('totalIncome').textContent = `₹${totalIncome.toLocaleString('en-IN')}`;
+            document.getElementById('totalDeductions').textContent = `₹${totalDeductions.toLocaleString('en-IN')}`;
+            document.getElementById('taxableIncome').textContent = `₹${taxableIncome.toLocaleString('en-IN')}`;
+            document.getElementById('taxPayable').textContent = `₹${Math.round(tax).toLocaleString('en-IN')}`;
+
+            // Hide the current step and show results
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById('result').style.display = 'block';
+        }
+
+        function resetCalculator() {
+            // Reset all form fields
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => input.value = '');
+
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => select.selectedIndex = 0);
+
+            // Reset step dots
+            const stepDots = document.querySelectorAll('.step-dot');
+            stepDots.forEach((dot, index) => {
+                dot.classList.remove('active', 'completed');
+                if (index === 0) {
+                    dot.classList.add('active');
+                }
+            });
+
+            // Show first step and hide others
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('result').style.display = 'none';
+
+            // Reset current step
+            currentStep = 1;
+        }
+
+        // Add validation to next step buttons
+        function validateStep(step) {
+            if (step === 1) {
+                const financialYear = document.getElementById('financialYear').value;
+                const ageGroup = document.getElementById('ageGroup').value;
+                if (!financialYear || !ageGroup) {
+                    alert('Please select both Financial Year and Age Group');
+                    return false;
+                }
+            }
+            // Add more validations for other steps if needed
+            return true;
+        }
+
+        // Update nextStep function to include validation
+        function nextStep(step) {
+            if (!validateStep(step)) {
+                return;
+            }
+            document.getElementById(`step${step}`).classList.remove('active');
+            document.getElementById(`step${step + 1}`).classList.add('active');
+
+            const dots = document.querySelectorAll('.step-dot');
+            dots[step - 1].classList.add('completed');
+            dots[step - 1].classList.remove('active');
+            dots[step].classList.add('active');
+
+            currentStep = step + 1;
+        }
+
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.info-icon').forEach(icon => {
+                icon.addEventListener('mouseenter', (e) => {
+                    const tooltip = e.target.querySelector('.tooltip');
+                    if (tooltip) {
+                        tooltip.style.display = 'block';
+                    }
+                });
+
+                icon.addEventListener('mouseleave', (e) => {
+                    const tooltip = e.target.querySelector('.tooltip');
+                    if (tooltip) {
+                        tooltip.style.display = 'none';
+                    }
+                });
+            });
+        });
+        // Function to handle the redirection
+        function income_tax() {
+            window.location.href = 'income_tax.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(1)"); // Assuming it's the 1ST card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", income_tax);
+            }
+        });
+        // Function to handle the redirection
+        function currency() {
+            window.location.href = 'currency.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(2)"); // Assuming it's the 2ND card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", currency);
+            }
+        });
+        // Function to handle the redirection
+        function CTCCalculator() {
+            window.location.href = 'CTC Calculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(3)"); // Assuming it's the 3RD card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", CTCCalculator);
+            }
+        });
+        // Function to handle the redirection
+        function Fixed_DepositCalculator() {
+            window.location.href = 'Fixed_DepositCalculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(4)"); // Assuming it's the 4th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", Fixed_DepositCalculator);
+            }
+        });
+        // Function to handle the redirection
+        function goToHomePage() {
+            window.location.href = 'income_tax.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(5)"); // Assuming it's the 5th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", RetirementPlanning);
+            }
+        });
+        // Function to handle the redirection
+        function RetirementPlanning() {
+            window.location.href = 'RetirementPlanning.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(6)"); // Assuming it's the 6th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", sipcalculator);
+            }
+        });
+        // Function to handle the redirection
+        function sipcalculator() {
+            window.location.href = 'sipcalculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(1)"); // Assuming it's the 7th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", goToHomePage);
+            }
+        });
+    </script>
+</body>
+
+</html>

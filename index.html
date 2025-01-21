@@ -3,237 +3,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinCalc Pro</title>
+    <title>FinCalc Pro - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --light-bg: #f3f4f6;
+            --white: #ffffff;
         }
 
         body {
-            background-color: #f5f5f5;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f6f8ff 0%, #f0f4ff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
         }
 
-        .header {
+        .logo {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            color: #666;
-        }
-
-        .calculator-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .calculator-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .calculator-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .card-header {
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            justify-content: center;
+            gap: 10px;
+            color: var(--primary-color);
         }
 
-        .icon {
-            width: 40px;
-            height: 40px;
-            margin-right: 15px;
-            padding: 8px;
+        .logo i {
+            font-size: 32px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            color: var(--text-color);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--white);
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            padding: 0 5px;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:valid + label {
+            top: 0;
+            left: 10px;
+            font-size: 12px;
+            background: var(--white);
+            color: var(--primary-color);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            gap: 5px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            accent-color: var(--primary-color);
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #ef4444;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+            padding: 10px;
+            background: #fee2e2;
             border-radius: 8px;
         }
 
-        .card-title {
-            font-size: 1.2rem;
-            color: #333;
-        }
-
-        .card-description {
-            color: #666;
-            line-height: 1.5;
-        }
-
-        .features {
-            margin-top: 40px;
-            padding: 30px;
-            background: linear-gradient(135deg, #e6f3ff 0%, #f0f0ff 100%);
-            border-radius: 10px;
+        .success-message {
+            color: #10b981;
             text-align: center;
+            margin-bottom: 15px;
+            display: none;
+            padding: 10px;
+            background: #d1fae5;
+            border-radius: 8px;
         }
 
-        .features h2 {
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            color: #333;
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--white);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        .feature-item h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .feature-item p {
-            color: #666;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-grid {
-                grid-template-columns: 1fr;
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
             }
-            
-            .header h1 {
-                font-size: 2rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6b7280;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .options {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1>FinCalc Pro</h1>
-            <p>Your complete suite of financial planning tools</p>
-        </header>
-
-        <div class="calculator-grid" id="calculatorGrid">
-            <!-- Calculator cards will be inserted here by JavaScript -->
+        <div class="logo">
+            <i class="fas fa-calculator"></i>
+            <span class="logo-text">FinCalc Pro</span>
         </div>
 
-        <div class="features">
-            <h2>Why Choose FinCalc Pro?</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h3>Comprehensive Tools</h3>
-                    <p>All your financial calculations in one place</p>
-                </div>
-                <div class="feature-item">
-                    <h3>Accurate Results</h3>
-                    <p>Precise calculations for better financial planning</p>
-                </div>
-                <div class="feature-item">
-                    <h3>User-Friendly</h3>
-                    <p>Simple interface with detailed explanations</p>
-                </div>
+        <h1>Welcome Back!</h1>
+
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="text" id="username" required>
+                <label for="username">Username</label>
             </div>
-        </div>
+
+            <div class="input-group">
+                <input type="password" id="password" required>
+                <label for="password">Password</label>
+                <button type="button" class="password-toggle" onclick="togglePassword()">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+
+            <div class="options">
+                <label class="remember-me">
+                    <input type="checkbox" id="rememberMe">
+                    Remember me
+                </label>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </div>
+
+            <button type="submit">
+                <span class="button-text">Login</span>
+                <div class="loading"></div>
+            </button>
+        </form>
     </div>
 
     <script>
-        const calculators = [
-            {
-                title: "Income Tax Calculator",
-                icon: "📋",
-                iconColor: "#4299e1",
-                description: "Calculate your income tax liability and plan your taxes efficiently"
-            },
-            {
-                title: "Currency Converter",
-                icon: "💱",
-                iconColor: "#48bb78",
-                description: "Convert between different currencies with real-time exchange rates"
-            },
-            {
-                title: "CTC Calculator",
-                icon: "💼",
-                iconColor: "#9f7aea",
-                description: "Break down your Cost to Company into various components"
-            },
-            {
-                title: "Fixed Deposit Calculator",
-                icon: "🏦",
-                iconColor: "#ed8936",
-                description: "Calculate FD maturity amount and interest earnings"
-            },
-            {
-                title: "Retirement Calculator",
-                icon: "🐷",
-                iconColor: "#f56565",
-                description: "Plan your retirement savings and estimate corpus needed"
-            },
-            {
-                title: "SIP Calculator",
-                icon: "🧮",
-                iconColor: "#38b2ac",
-                description: "Calculate returns on your Systematic Investment Plans"
-            },
-            {
-                title: "Loan Eligibility Calculator",
-                icon: "📊",
-                iconColor: "#ecc94b",
-                description: "Check your loan eligibility based on income and expenses"
-            },
-            {
-                title: "Mortgage Calculator",
-                icon: "🏠",
-                iconColor: "#667eea",
-                description: "Calculate EMI and total interest for your home loan"
-            }
-        ];
+        // Form elements
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const loadingSpinner = document.querySelector('.loading');
+        const buttonText = document.querySelector('.button-text');
 
-        function createCalculatorCards() {
-            const grid = document.getElementById('calculatorGrid');
-            
-            calculators.forEach(calc => {
-                const card = document.createElement('div');
-                card.className = 'calculator-card';
-                
-                card.innerHTML = `
-                    <div class="card-header">
-                        <span class="icon" style="background-color: ${calc.iconColor}20; color: ${calc.iconColor}">${calc.icon}</span>
-                        <h2 class="card-title">${calc.title}</h2>
-                    </div>
-                    <p class="card-description">${calc.description}</p>
-                `;
-                
-                card.addEventListener('click', () => {
-                    // Add navigation logic here
-                    console.log(`Navigating to ${calc.title}`);
-                });
-                
-                grid.appendChild(card);
-            });
+        // Show error message
+        function showError(message) {
+            errorMessage.style.display = 'block';
+            errorMessage.textContent = message;
+            successMessage.style.display = 'none';
         }
 
-        // Initialize the calculator cards when the page loads
-        document.addEventListener('DOMContentLoaded', createCalculatorCards);
+        // Show success message
+        function showSuccess(message) {
+            successMessage.style.display = 'block';
+            successMessage.textContent = message;
+            errorMessage.style.display = 'none';
+        }
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.password-toggle i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Handle form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Show loading state
+            loadingSpinner.style.display = 'block';
+            buttonText.style.display = 'none';
+
+            try {
+                // Simulate API call with timeout
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                if (username === 'adarsh' && password === '12345678') {
+                    // Save to localStorage if remember me is checked
+                    if (rememberMe) {
+                        localStorage.setItem('isLoggedIn', 'true');
+                    } else {
+                        sessionStorage.setItem('isLoggedIn', 'true');
+                    }
+
+                    showSuccess('Login successful! Redirecting...');
+                    
+                    // Redirect after success message
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 1000);
+                } else {
+                    showError('Invalid username or password');
+                }
+            } catch (error) {
+                showError('An error occurred. Please try again.');
+            } finally {
+                // Hide loading state
+                loadingSpinner.style.display = 'none';
+                buttonText.style.display = 'block';
+            }
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('isLoggedIn') === 'true' || 
+                sessionStorage.getItem('isLoggedIn') === 'true') {
+                window.location.href = 'index.html';
+            }
+        });
     </script>
 </body>
 </html>

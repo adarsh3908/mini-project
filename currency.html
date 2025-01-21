@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinCalc Pro - Your Financial Calculator Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --light-bg: #f3f4f6;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        /* Navbar styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .login-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        /* Hero section */
+        .hero {
+            padding-top: 80px;
+            background: linear-gradient(135deg, #f6f8ff 0%, #f0f4ff 100%);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Calculator grid */
+        .calculator-section {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+        }
+
+        .calculator-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .calculator-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.5rem;
+        }
+
+        /* Features section */
+        .features {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #e6f3ff 0%, #f0f0ff 100%);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-color);
+            color: var(--white);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .converter-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .currency-input {
+            display: flex;
+            align-items: center;
+        }
+
+        .currency-input input {
+            flex-grow: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .currency-input input:focus {
+            outline: none;
+            border-color: #333;
+        }
+
+        .currency-select-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .currency-select {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .currency-select select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            appearance: none;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .currency-select select:focus {
+            outline: none;
+            border-color: #333;
+        }
+
+        .flag-container {
+            position: absolute;
+            right: 70px;
+            top: 62%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 25px;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .flag {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .swap-btn {
+            position: absolute;
+            right: 20px;
+            top: 122%;
+            transform: translateY(-50%);
+            background: #333;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .swap-btn:hover {
+            background: #555;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .convert-btn {
+            width: 100%;
+            padding: 18px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .convert-btn:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
+        #result {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 1.4rem;
+            color: #333;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .features {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-item h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .feature-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 10px;
+            }
+
+            .converter-container,
+            .features {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .currency-select-container {
+                padding: 10px;
+            }
+
+            .flag-container {
+                right: 60px;
+                margin-top: 13px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <i class="fas fa-calculator"></i>
+                FinCalc Pro
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="home.html">Back to Home</a>
+                <a href="#features">Features</a>
+                <a href="#calculators">Calculators</a>
+                <a href="#contact">Contact</a>
+                <a href="#login" class="login-btn">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Smart Financial Planning Starts Here</h1>
+                <p>Access powerful financial calculators to make informed decisions about your money, investments, and
+                    future.</p>
+                <a href="#calculators" class="login-btn">Get Started</a>
+            </div>
+            <div class="hero-image">
+                <!-- Replace src with your actual image -->
+                <img src="https://images.pexels.com/photos/186464/pexels-photo-186464.jpeg"
+                    alt="Financial Planning Dashboard" class="hero-image">
+            </div>
+        </div>
+    </section>
+    <!--currency claculator-->
+
+
+    <div class="page-container">
+        <div class="header">
+            <h1>Currency Converter</h1>
+            <p>Convert currencies with real-time exchange rates</p>
+        </div>
+
+        <div class="converter-container">
+            <div class="input-group">
+                <label class="input-label">Amount</label>
+                <div class="currency-input">
+                    <input type="number" id="amount" placeholder="Enter amount" min="0" step="0.01">
+                </div>
+            </div>
+
+            <div class="currency-select-container">
+                <label class="input-label">From Currency</label>
+                <div class="currency-select">
+                    <select id="fromCurrency"></select>
+                </div>
+                <div class="flag-container">
+                    <img id="fromFlag" class="flag" src="" alt="From Flag">
+                </div>
+                <button class="swap-btn" onclick="swapCurrencies()">⇄</button>
+            </div>
+
+            <div class="currency-select-container">
+                <label class="input-label">To Currency</label>
+                <div class="currency-select">
+                    <select id="toCurrency"></select>
+                </div>
+                <div class="flag-container">
+                    <img id="toFlag" class="flag" src="" alt="To Flag">
+                </div>
+            </div>
+
+            <button class="convert-btn" onclick="convertCurrency()">Convert</button>
+            <div id="result"></div>
+        </div>
+
+        <div class="features">
+            <h2>Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Real-Time Rates</h3>
+                    <p>Get the latest exchange rates from reliable financial sources</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Global Currencies</h3>
+                    <p>Support for all major world currencies with country flags</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Quick Convert</h3>
+                    <p>Instant currency conversion with easy currency swapping</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Section -->
+        <section id="calculators" class="calculator-section">
+            <h2 class="section-title">Our Other Calculators</h2>
+            <div class="calculator-grid" id="calculatorGrid">
+                <!-- Calculators will be inserted here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <h2 class="section-title">Why Choose FinCalc Pro?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-tools"></i>
+                    <h3>Comprehensive Tools</h3>
+                    <p>All your financial calculations in one place, from basic budgeting to complex investment
+                        analysis.
+                    </p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Accurate Results</h3>
+                    <p>Precise calculations powered by advanced algorithms for better financial planning.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>User-Friendly</h3>
+                    <p>Intuitive interface with detailed explanations to make financial planning accessible to everyone.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#press">Press</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#security">Security</a></li>
+                        <li><a href="#updates">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#help">Help Center</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#documentation">Documentation</a></li>
+                        <li><a href="#status">Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms of Service</a></li>
+                        <li><a href="#cookies">Cookie Policy</a></li>
+                        <li><a href="#compliance">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FinCalc Pro. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            // Calculator data
+            const calculators = [
+            {
+                title: "Income Tax Calculator",
+                icon: "fas fa-file-invoice-dollar",
+                iconColor: "#4299e1",
+                description: "Calculate your income tax liability and plan your taxes efficiently"
+            },
+            {
+                title: "Currency Converter",
+                icon: "fas fa-exchange-alt",
+                iconColor: "#48bb78",
+                description: "Convert between different currencies with real-time exchange rates"
+            },
+            {
+                title: "CTC Calculator",
+                icon: "fas fa-briefcase",
+                iconColor: "#9f7aea",
+                description: "Break down your Cost to Company into various components"
+            },
+            {
+                title: "Fixed Deposit Calculator",
+                icon: "fas fa-piggy-bank",
+                iconColor: "#ed8936",
+                description: "Calculate FD maturity amount and interest earnings"
+            },
+            {
+                title: "Retirement Calculator",
+                icon: "fas fa-umbrella-beach",
+                iconColor: "#f56565",
+                description: "Plan your retirement savings and estimate corpus needed"
+            },
+            {
+                title: "SIP Calculator",
+                icon: "fas fa-chart-pie",
+                iconColor: "#38b2ac",
+                description: "Calculate returns on your Systematic Investment Plans"
+            },
+            {
+                title: "Loan Eligibility Calculator",
+                icon: "fas fa-percentage",
+                iconColor: "#ecc94b",
+                description: "Check your loan eligibility based on income and expenses"
+            },
+            {
+                title: "Mortgage Calculator",
+                icon: "fas fa-home",
+                iconColor: "#667eea",
+                description: "Calculate EMI and total interest for your home loan"
+            }
+            ];
+
+            // Function to create calculator cards
+            function createCalculatorCards() {
+                const grid = document.getElementById('calculatorGrid');
+
+                calculators.forEach(calc => {
+                    const card = document.createElement('div');
+                    card.className = 'calculator-card';
+
+                    card.innerHTML = `
+                    <div class="card-header">
+                        <span class="icon" style="background-color: ${calc.iconColor}20">
+                            <i class="${calc.icon}" style="color: ${calc.iconColor}"></i>
+                        </span>
+                        <h2 class="card-title">${calc.title}</h2>
+                    </div>
+                    <p class="card-description">${calc.description}</p>
+                `;
+
+                    card.addEventListener('click', () => {
+                        // Add navigation logic here
+                        console.log(`Navigating to ${calc.title}`);
+                    });
+
+                    grid.appendChild(card);
+                });
+            }
+
+            // Mobile menu toggle functionality
+            document.addEventListener('DOMContentLoaded', () => {
+                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                const navLinks = document.querySelector('.nav-links');
+
+                mobileMenuBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                });
+
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.navbar-container')) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+
+                // Initialize calculator cards
+                createCalculatorCards();
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.backdropFilter = 'blur(10px)';
+                } else {
+                    navbar.style.background = 'white';
+                    navbar.style.backdropFilter = 'none';
+                }
+            });
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        // Close mobile menu after clicking a link
+                        document.querySelector('.nav-links').classList.remove('active');
+                    }
+                });
+            });
+            // Comprehensive Currency Data 
+            const currencyData = [
+                { code: 'USD', name: 'United States Dollar', country: 'United States', flag: 'https://flagcdn.com/w320/us.png' },
+                { code: 'EUR', name: 'Euro', country: 'European Union', flag: 'https://flagcdn.com/w320/eu.png' },
+                { code: 'GBP', name: 'British Pound Sterling', country: 'United Kingdom', flag: 'https://flagcdn.com/w320/gb.png' },
+                { code: 'JPY', name: 'Japanese Yen', country: 'Japan', flag: 'https://flagcdn.com/w320/jp.png' },
+                { code: 'CAD', name: 'Canadian Dollar', country: 'Canada', flag: 'https://flagcdn.com/w320/ca.png' },
+                { code: 'AUD', name: 'Australian Dollar', country: 'Australia', flag: 'https://flagcdn.com/w320/au.png' },
+                { code: 'CHF', name: 'Swiss Franc', country: 'Switzerland', flag: 'https://flagcdn.com/w320/ch.png' },
+                { code: 'CNY', name: 'Chinese Yuan', country: 'China', flag: 'https://flagcdn.com/w320/cn.png' },
+                { code: 'INR', name: 'Indian Rupee', country: 'India', flag: 'https://flagcdn.com/w320/in.png' },
+                { code: 'BRL', name: 'Brazilian Real', country: 'Brazil', flag: 'https://flagcdn.com/w320/br.png' },
+                { code: 'RUB', name: 'Russian Ruble', country: 'Russia', flag: 'https://flagcdn.com/w320/ru.png' },
+                { code: 'KRW', name: 'South Korean Won', country: 'South Korea', flag: 'https://flagcdn.com/w320/kr.png' },
+                { code: 'SGD', name: 'Singapore Dollar', country: 'Singapore', flag: 'https://flagcdn.com/w320/sg.png' },
+                { code: 'MXN', name: 'Mexican Peso', country: 'Mexico', flag: 'https://flagcdn.com/w320/mx.png' },
+                { code: 'AED', name: 'United Arab Emirates Dirham', country: 'United Arab Emirates', flag: 'https://flagcdn.com/w320/ae.png' },
+                { code: 'ZAR', name: 'South African Rand', country: 'South Africa', flag: 'https://flagcdn.com/w320/za.png' },
+                { code: 'NZD', name: 'New Zealand Dollar', country: 'New Zealand', flag: 'https://flagcdn.com/w320/nz.png' },
+                { code: 'SEK', name: 'Swedish Krona', country: 'Sweden', flag: 'https://flagcdn.com/w320/se.png' },
+                { code: 'NOK', name: 'Norwegian Krone', country: 'Norway', flag: 'https://flagcdn.com/w320/no.png' },
+                { code: 'DKK', name: 'Danish Krone', country: 'Denmark', flag: 'https://flagcdn.com/w320/dk.png' },
+                { code: 'SAR', name: 'Saudi Riyal', country: 'Saudi Arabia', flag: 'https://flagcdn.com/w320/sa.png' },
+                { code: 'HKD', name: 'Hong Kong Dollar', country: 'Hong Kong', flag: 'https://flagcdn.com/w320/hk.png' },
+                { code: 'PLN', name: 'Polish Złoty', country: 'Poland', flag: 'https://flagcdn.com/w320/pl.png' },
+                { code: 'TRY', name: 'Turkish Lira', country: 'Turkey', flag: 'https://flagcdn.com/w320/tr.png' },
+                { code: 'THB', name: 'Thai Baht', country: 'Thailand', flag: 'https://flagcdn.com/w320/th.png' },
+                { code: 'IDR', name: 'Indonesian Rupiah', country: 'Indonesia', flag: 'https://flagcdn.com/w320/id.png' },
+                { code: 'MYR', name: 'Malaysian Ringgit', country: 'Malaysia', flag: 'https://flagcdn.com/w320/my.png' },
+                { code: 'PHP', name: 'Philippine Peso', country: 'Philippines', flag: 'https://flagcdn.com/w320/ph.png' },
+                { code: 'VND', name: 'Vietnamese Dong', country: 'Vietnam', flag: 'https://flagcdn.com/w320/vn.png' }
+            ];
+
+            const fromCurrencySelect = document.getElementById('fromCurrency');
+            const toCurrencySelect = document.getElementById('toCurrency');
+            const fromFlag = document.getElementById('fromFlag');
+            const toFlag = document.getElementById('toFlag');
+            const resultDiv = document.getElementById('result');
+
+            // Populate currency dropdowns
+            function populateCurrencies() {
+                // Sort currencies alphabetically by code
+                currencyData.sort((a, b) => a.code.localeCompare(b.code));
+
+                currencyData.forEach(currency => {
+                    const fromOption = document.createElement('option');
+                    const toOption = document.createElement('option');
+
+                    fromOption.value = currency.code;
+                    fromOption.textContent = `${currency.code} - ${currency.name} (${currency.country})`;
+
+                    toOption.value = currency.code;
+                    toOption.textContent = `${currency.code} - ${currency.name} (${currency.country})`;
+
+                    fromCurrencySelect.appendChild(fromOption);
+                    toCurrencySelect.appendChild(toOption);
+                });
+
+                // default selections Hai starting me rahega
+                fromCurrencySelect.value = 'USD';
+                toCurrencySelect.value = 'EUR';
+                updateFlags();
+            }
+
+            // Update flags based on selected currencies
+            function updateFlags() {
+                const fromSelectedCurrency = fromCurrencySelect.value;
+                const toSelectedCurrency = toCurrencySelect.value;
+
+                const fromCurrencyObj = currencyData.find(c => c.code === fromSelectedCurrency);
+                const toCurrencyObj = currencyData.find(c => c.code === toSelectedCurrency);
+
+                fromFlag.src = fromCurrencyObj ? fromCurrencyObj.flag : '';
+                toFlag.src = toCurrencyObj ? toCurrencyObj.flag : '';
+            }
+
+            //  currency Swap kare wala system ka function
+            function swapCurrencies() {
+                const tempCurrency = fromCurrencySelect.value;
+                const tempFlag = fromFlag.src;
+
+                // Swap currency selections kare wala system ka function
+                fromCurrencySelect.value = toCurrencySelect.value;
+                toCurrencySelect.value = tempCurrency;
+
+                // Swap flags kare wala system ka function
+                fromFlag.src = toFlag.src;
+                toFlag.src = tempFlag;
+
+                // Optional hai Trigger conversion  hoga swap ke baad
+                convertCurrency();
+            }
+
+            // Currency conversion function
+            async function convertCurrency() {
+                const amount = document.getElementById('amount').value;
+                const fromCurrency = fromCurrencySelect.value;
+                const toCurrency = toCurrencySelect.value;
+
+                if (!amount) {
+                    resultDiv.textContent = 'Please enter an amount';
+                    return;
+                }
+
+                resultDiv.textContent = 'Converting...';
+
+                // List of exchange rate APIs with priority
+                const APIs = [
+                    {
+                        url: `https://v6.exchangerate-api.com/v6/YOUR_EXCHANGERATE_API_KEY/latest/${fromCurrency}`,
+                        getRate: (data) => data.conversion_rates[toCurrency]
+                    },
+                    {
+                        url: `https://open.er-api.com/v6/latest/${fromCurrency}`,
+                        getRate: (data) => data.rates[toCurrency]
+                    }
+                ];
+
+                // Try APIs sequentially
+                for (const api of APIs) {
+                    try {
+                        const response = await fetch(api.url);
+                        const data = await response.json();
+
+                        const exchangeRate = api.getRate(data);
+
+                        if (exchangeRate) {
+                            const convertedAmount = (amount * exchangeRate).toFixed(2);
+                            resultDiv.textContent = `${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}`;
+                            return;
+                        }
+                    } catch (error) {
+                        console.error('API Error:', error);
+                    }
+                }
+
+                // If all APIs fail
+                resultDiv.textContent = 'Conversion failed. Please check your internet connection.';
+            }
+
+            // Event listeners for currency and flag updates
+            fromCurrencySelect.addEventListener('change', updateFlags);
+            toCurrencySelect.addEventListener('change', updateFlags);
+
+            // Initialize currencies on page load
+            populateCurrencies();
+            // Function to handle the redirection
+        function income_tax() {
+            window.location.href = 'income_tax.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(1)"); // Assuming it's the 1ST card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", income_tax);
+            }
+        });
+        // Function to handle the redirection
+        function currency() {
+            window.location.href = 'currency.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(2)"); // Assuming it's the 2ND card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", currency);
+            }
+        });
+        // Function to handle the redirection
+        function CTCCalculator() {
+            window.location.href = 'CTC Calculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(3)"); // Assuming it's the 3RD card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", CTCCalculator);
+            }
+        });
+        // Function to handle the redirection
+        function Fixed_DepositCalculator() {
+            window.location.href = 'Fixed_DepositCalculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(4)"); // Assuming it's the 4th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", Fixed_DepositCalculator);
+            }
+        });
+        // Function to handle the redirection
+        function goToHomePage() {
+            window.location.href = 'income_tax.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(5)"); // Assuming it's the 5th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", RetirementPlanning);
+            }
+        });
+        // Function to handle the redirection
+        function RetirementPlanning() {
+            window.location.href = 'RetirementPlanning.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(6)"); // Assuming it's the 6th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", sipcalculator);
+            }
+        });
+        // Function to handle the redirection
+        function sipcalculator() {
+            window.location.href = 'sipcalculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(1)"); // Assuming it's the 7th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", goToHomePage);
+            }
+        });
+        </script>
+</body>
+
+</html>

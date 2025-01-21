@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPS Calculator</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --light-bg: #f3f4f6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calculator {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .results {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--light-bg);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background-color: var(--light-bg);
+            border-radius: 0.5rem;
+        }
+
+        .result-label {
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1 class="title">NPS Calculator</h1>
+        
+        <div class="input-group">
+            <label for="monthly-investment">Monthly Investment (₹)</label>
+            <input type="number" id="monthly-investment" min="500" step="100" value="5000">
+            <div class="error" id="investment-error"></div>
+        </div>
+
+        <div class="input-group">
+            <label for="current-age">Your Age (Years)</label>
+            <input type="range" id="current-age" min="18" max="60" step="1" value="30">
+            <div class="range-values">
+                <span>18 Years</span>
+                <span id="age-value">30 Years</span>
+                <span>60 Years</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="expected-return">Expected Return on Investment (%)</label>
+            <input type="range" id="expected-return" min="1" max="12" step="0.1" value="8">
+            <div class="range-values">
+                <span>1%</span>
+                <span id="return-value">8%</span>
+                <span>12%</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="annuity-percentage">Percentage of Annuity Purchase (%)</label>
+            <input type="range" id="annuity-percentage" min="40" max="100" step="1" value="40">
+            <div class="range-values">
+                <span>40%</span>
+                <span id="annuity-value">40%</span>
+                <span>100%</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="annuity-return">Expected Return of Annuity (%)</label>
+            <input type="range" id="annuity-return" min="1" max="8" step="0.1" value="5">
+            <div class="range-values">
+                <span>1%</span>
+                <span id="annuity-return-value">5%</span>
+                <span>8%</span>
+            </div>
+        </div>
+
+        <div class="results">
+            <div class="result-item">
+                <span class="result-label">Invested Amount</span>
+                <span class="result-value" id="invested-amount">₹0</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Pension Wealth</span>
+                <span class="result-value" id="pension-wealth">₹0</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Lumpsum Amount</span>
+                <span class="result-value" id="lumpsum-amount">₹0</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Monthly Pension</span>
+                <span class="result-value" id="monthly-pension">₹0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const monthlyInvestment = document.getElementById('monthly-investment');
+        const currentAge = document.getElementById('current-age');
+        const expectedReturn = document.getElementById('expected-return');
+        const annuityPercentage = document.getElementById('annuity-percentage');
+        const annuityReturn = document.getElementById('annuity-return');
+
+        const ageValue = document.getElementById('age-value');
+        const returnValue = document.getElementById('return-value');
+        const annuityValue = document.getElementById('annuity-value');
+        const annuityReturnValue = document.getElementById('annuity-return-value');
+
+        const investedAmount = document.getElementById('invested-amount');
+        const pensionWealth = document.getElementById('pension-wealth');
+        const lumpsumAmount = document.getElementById('lumpsum-amount');
+        const monthlyPension = document.getElementById('monthly-pension');
+        const investmentError = document.getElementById('investment-error');
+
+        function calculateNPS() {
+            const monthly = parseFloat(monthlyInvestment.value);
+            const age = parseFloat(currentAge.value);
+            const returnRate = parseFloat(expectedReturn.value) / 100;
+            const annuityPercent = parseFloat(annuityPercentage.value) / 100;
+            const annuityReturnRate = parseFloat(annuityReturn.value) / 100;
+
+            if (isNaN(monthly) || monthly < 500) {
+                investmentError.textContent = 'Please enter a valid amount (minimum ₹500)';
+                return;
+            }
+            investmentError.textContent = '';
+
+            // Calculate investment period until retirement
+            const investmentYears = 60 - age;
+            const totalMonths = investmentYears * 12;
+
+            // Calculate total invested amount
+            const totalInvested = monthly * totalMonths;
+
+            // Calculate pension wealth using compound interest formula
+            const monthlyRate = returnRate / 12;
+            const futureValue = monthly * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) * (1 + monthlyRate);
+
+            // Calculate lumpsum and annuity amounts
+            const annuityAmount = futureValue * annuityPercent;
+            const lumpsumValue = futureValue * (1 - annuityPercent);
+
+            // Calculate monthly pension (using annuity formula)
+            const monthlyPensionValue = (annuityAmount * annuityReturnRate) / 12;
+
+            // Update results with formatted numbers
+            investedAmount.textContent = `₹${totalInvested.toFixed(2)}`;
+            pensionWealth.textContent = `₹${futureValue.toFixed(2)}`;
+            lumpsumAmount.textContent = `₹${lumpsumValue.toFixed(2)}`;
+            monthlyPension.textContent = `₹${monthlyPensionValue.toFixed(2)}`;
+        }
+
+        // Update range slider values and calculate
+        currentAge.oninput = function() {
+            ageValue.textContent = this.value + ' Years';
+            calculateNPS();
+        };
+
+        expectedReturn.oninput = function() {
+            returnValue.textContent = this.value + '%';
+            calculateNPS();
+        };
+
+        annuityPercentage.oninput = function() {
+            annuityValue.textContent = this.value + '%';
+            calculateNPS();
+        };
+
+        annuityReturn.oninput = function() {
+            annuityReturnValue.textContent = this.value + '%';
+            calculateNPS();
+        };
+
+        // Calculate on amount change
+        monthlyInvestment.oninput = calculateNPS;
+
+        // Initial calculation
+        calculateNPS();
+    </script>
+</body>
+</html>

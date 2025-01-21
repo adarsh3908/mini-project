@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinCalc Pro - Your Financial Calculator Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --light-bg: #f3f4f6;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        /* Navbar styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .login-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        /* Hero section */
+        .hero {
+            padding-top: 80px;
+            background: linear-gradient(135deg, #f6f8ff 0%, #f0f4ff 100%);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Calculator grid */
+        .calculator-section {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+        }
+
+        .calculator-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .calculator-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.5rem;
+        }
+
+        /* Features section */
+        .features {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #e6f3ff 0%, #f0f0ff 100%);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-color);
+            color: var(--white);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        <!--claculatorstyle--> 
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #1f2937;
+            --light-bg: #f3f4f6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: var(--white);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            background: var(--light-bg);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            background-color: var(--white);
+        }
+
+        .value-display {
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .calculate-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .calculate-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--light-bg);
+            border-radius: 0.5rem;
+            display: none;
+        }
+
+        .result-item {
+            margin-bottom: 1rem;
+        }
+
+        .result-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .message {
+            text-align: center;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <i class="fas fa-calculator"></i>
+                FinCalc Pro
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="home.html">Back to home</a>
+                <a href="#features">Features</a>
+                <a href="#calculators">Calculators</a>
+                <a href="#contact">Contact</a>
+                <a href="#login" class="login-btn">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Smart Financial Planning Starts Here</h1>
+                <p>Access powerful financial calculators to make informed decisions about your money, investments, and
+                    future.</p>
+                <a href="#calculators" class="login-btn">Get Started</a>
+            </div>
+            <div class="hero-image">
+                <!-- Replace src with your actual image -->
+                <img src="https://images.pexels.com/photos/186464/pexels-photo-186464.jpeg"
+                    alt="Financial Planning Dashboard" class="hero-image">
+            </div>
+        </div>
+    </section>
+    <!--claculator-->
+    <div class="container">
+        <h1>Retirement Planning Calculator</h1>
+
+        <div class="input-group">
+            <label>Current Age (15-60 Years)</label>
+            <div class="slider-container">
+                <input type="range" id="currentAge" min="15" max="60" value="30">
+                <div class="value-display" id="currentAgeValue">30</div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Desired Retirement Age (Up to 70 Years)</label>
+            <div class="slider-container">
+                <input type="range" id="retirementAge" min="45" max="70" value="60">
+                <div class="value-display" id="retirementAgeValue">60</div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Life Expectancy (Up to 100 Years)</label>
+            <div class="slider-container">
+                <input type="range" id="lifeExpectancy" min="60" max="100" value="80">
+                <div class="value-display" id="lifeExpectancyValue">80</div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Monthly Income Required In Retirement Years (₹)</label>
+            <input type="number" id="monthlyIncome" placeholder="Enter amount" value="50000">
+        </div>
+
+        <div class="input-group">
+            <label>Expected Inflation Rate (3%-15%)</label>
+            <div class="slider-container">
+                <input type="range" id="inflationRate" min="3" max="15" value="6">
+                <div class="value-display" id="inflationRateValue">6%</div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Expected Return On Investment (Pre-retirement)</label>
+            <div class="slider-container">
+                <input type="range" id="preReturnRate" min="5" max="15" value="12">
+                <div class="value-display" id="preReturnRateValue">12%</div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Expected Return On Investment (Post-retirement)</label>
+            <div class="slider-container">
+                <input type="range" id="postReturnRate" min="5" max="15" value="8">
+                <div class="value-display" id="postReturnRateValue">8%</div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Do You Have Any Existing Saving Or Investment For Retirement?</label>
+            <select id="existingSavings">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+            </select>
+        </div>
+
+        <button class="calculate-btn" onclick="calculateRetirement()">Calculate Retirement Plan</button>
+
+        <div class="results" id="results">
+            <div class="result-item">
+                <h3>Annual Income Required Immediately After Retirement</h3>
+                <p>₹ <span id="annualIncome">0</span></p>
+            </div>
+            <div class="result-item">
+                <h3>Additional Retirement Fund Needed</h3>
+                <p>₹ <span id="retirementFund">0</span></p>
+            </div>
+            <div class="result-item">
+                <h3>Monthly Savings Required</h3>
+                <p>₹ <span id="monthlySavings">0</span></p>
+            </div>
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <!-- Calculator Section -->
+    <section id="calculators" class="calculator-section">
+        <h2 class="section-title">Our Calculators</h2>
+        <div class="calculator-grid" id="calculatorGrid">
+            <!-- Calculators will be inserted here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2 class="section-title">Why Choose FinCalc Pro?</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <i class="fas fa-tools"></i>
+                <h3>Comprehensive Tools</h3>
+                <p>All your financial calculations in one place, from basic budgeting to complex investment analysis.
+                </p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-chart-line"></i>
+                <h3>Accurate Results</h3>
+                <p>Precise calculations powered by advanced algorithms for better financial planning.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-user-shield"></i>
+                <h3>User-Friendly</h3>
+                <p>Intuitive interface with detailed explanations to make financial planning accessible to everyone.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#press">Press</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#security">Security</a></li>
+                    <li><a href="#updates">Updates</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#documentation">Documentation</a></li>
+                    <li><a href="#status">Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#cookies">Cookie Policy</a></li>
+                    <li><a href="#compliance">Compliance</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 FinCalc Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Calculator data
+        const calculators = [
+        {
+                title: "Income Tax Calculator",
+                icon: "fas fa-file-invoice-dollar",
+                iconColor: "#4299e1",
+                description: "Calculate your income tax liability and plan your taxes efficiently"
+            },
+            {
+                title: "Currency Converter",
+                icon: "fas fa-exchange-alt",
+                iconColor: "#48bb78",
+                description: "Convert between different currencies with real-time exchange rates"
+            },
+            {
+                title: "CTC Calculator",
+                icon: "fas fa-briefcase",
+                iconColor: "#9f7aea",
+                description: "Break down your Cost to Company into various components"
+            },
+            {
+                title: "Fixed Deposit Calculator",
+                icon: "fas fa-piggy-bank",
+                iconColor: "#ed8936",
+                description: "Calculate FD maturity amount and interest earnings"
+            },
+            {
+                title: "Retirement Calculator",
+                icon: "fas fa-umbrella-beach",
+                iconColor: "#f56565",
+                description: "Plan your retirement savings and estimate corpus needed"
+            },
+            {
+                title: "SIP Calculator",
+                icon: "fas fa-chart-pie",
+                iconColor: "#38b2ac",
+                description: "Calculate returns on your Systematic Investment Plans"
+            },
+            {
+                title: "Loan Eligibility Calculator",
+                icon: "fas fa-percentage",
+                iconColor: "#ecc94b",
+                description: "Check your loan eligibility based on income and expenses"
+            },
+            {
+                title: "Mortgage Calculator",
+                icon: "fas fa-home",
+                iconColor: "#667eea",
+                description: "Calculate EMI and total interest for your home loan"
+            }
+        ];
+
+        // Function to create calculator cards
+        function createCalculatorCards() {
+            const grid = document.getElementById('calculatorGrid');
+
+            calculators.forEach(calc => {
+                const card = document.createElement('div');
+                card.className = 'calculator-card';
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="icon" style="background-color: ${calc.iconColor}20">
+                            <i class="${calc.icon}" style="color: ${calc.iconColor}"></i>
+                        </span>
+                        <h2 class="card-title">${calc.title}</h2>
+                    </div>
+                    <p class="card-description">${calc.description}</p>
+                `;
+
+                card.addEventListener('click', () => {
+                    // Add navigation logic here
+                    console.log(`Navigating to ${calc.title}`);
+                });
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.navbar-container')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+
+            // Initialize calculator cards
+            createCalculatorCards();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            } else {
+                navbar.style.background = 'white';
+                navbar.style.backdropFilter = 'none';
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu after clicking a link
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+            });
+        });
+        // Function to handle the redirection
+        function income_tax() {
+            window.location.href = 'income_tax.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(1)"); // Assuming it's the 1ST card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", income_tax);
+            }
+        });
+        // Function to handle the redirection
+        function currency() {
+            window.location.href = 'currency.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(2)"); // Assuming it's the 2ND card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", currency);
+            }
+        });
+        // Function to handle the redirection
+        function CTCCalculator() {
+            window.location.href = 'CTC Calculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(3)"); // Assuming it's the 3RD card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", CTCCalculator);
+            }
+        });
+        // Function to handle the redirection
+        function Fixed_DepositCalculator() {
+            window.location.href = 'Fixed_DepositCalculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(4)"); // Assuming it's the 4th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", Fixed_DepositCalculator);
+            }
+        });
+        // Function to handle the redirection
+        function goToHomePage() {
+            window.location.href = 'income_tax.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(1)"); // Assuming it's the 7th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", goToHomePage);
+            }
+        });
+        // Function to handle the redirection
+        function goToHomePage() {
+            window.location.href = 'income_tax.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(1)"); // Assuming it's the 7th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", goToHomePage);
+            }
+        });
+        // Function to handle the redirection
+        function goToHomePage() {
+            window.location.href = 'income_tax.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(1)"); // Assuming it's the 7th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", goToHomePage);
+            }
+        });
+        //js for the calculator
+        // Update value displays for all sliders
+        function updateValue(elementId, value, suffix = '') {
+            document.getElementById(elementId + 'Value').textContent = value + suffix;
+        }
+
+        // Add event listeners for all sliders
+        document.getElementById('currentAge').addEventListener('input', (e) => updateValue('currentAge', e.target.value));
+        document.getElementById('retirementAge').addEventListener('input', (e) => updateValue('retirementAge', e.target.value));
+        document.getElementById('lifeExpectancy').addEventListener('input', (e) => updateValue('lifeExpectancy', e.target.value));
+        document.getElementById('inflationRate').addEventListener('input', (e) => updateValue('inflationRate', e.target.value, '%'));
+        document.getElementById('preReturnRate').addEventListener('input', (e) => updateValue('preReturnRate', e.target.value, '%'));
+        document.getElementById('postReturnRate').addEventListener('input', (e) => updateValue('postReturnRate', e.target.value, '%'));
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('en-IN').format(Math.round(num));
+        }
+
+        function calculateRetirement() {
+            // Get all input values
+            const currentAge = parseInt(document.getElementById('currentAge').value);
+            const retirementAge = parseInt(document.getElementById('retirementAge').value);
+            const lifeExpectancy = parseInt(document.getElementById('lifeExpectancy').value);
+            const monthlyIncome = parseFloat(document.getElementById('monthlyIncome').value);
+            const inflationRate = parseFloat(document.getElementById('inflationRate').value) / 100;
+            const preReturnRate = parseFloat(document.getElementById('preReturnRate').value) / 100;
+            const postReturnRate = parseFloat(document.getElementById('postReturnRate').value) / 100;
+
+            // Calculate annual income needed at retirement
+            const annualIncome = monthlyIncome * 12;
+            const yearsToRetirement = retirementAge - currentAge;
+            const inflatedAnnualIncome = annualIncome * Math.pow(1 + inflationRate, yearsToRetirement);
+
+            // Calculate total retirement fund needed
+            const retirementYears = lifeExpectancy - retirementAge;
+            const totalRetirementFund = inflatedAnnualIncome *
+                ((1 - Math.pow(1 + postReturnRate - inflationRate, retirementYears)) /
+                    (inflationRate - postReturnRate));
+
+            // Calculate monthly savings needed
+            const monthlySavingsRequired = (totalRetirementFund /
+                ((Math.pow(1 + preReturnRate, yearsToRetirement) - 1) / preReturnRate)) / 12;
+
+            // Update results
+            document.getElementById('annualIncome').textContent = formatNumber(inflatedAnnualIncome);
+            document.getElementById('retirementFund').textContent = formatNumber(totalRetirementFund);
+            document.getElementById('monthlySavings').textContent = formatNumber(monthlySavingsRequired);
+
+            // Show results and message
+            document.getElementById('results').style.display = 'block';
+
+            // Set encouraging message based on monthly savings required
+            const message = monthlySavingsRequired < monthlyIncome * 0.3
+                ? "You're Doing Well! You Can Continue Investing In Mutual Funds For More Wealth"
+                : "Consider increasing your savings or adjusting your retirement goals to achieve your target";
+            document.getElementById('message').textContent = message;
+        }
+        // Function to handle the redirection
+        function income_tax() {
+            window.location.href = 'income_tax.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(1)"); // Assuming it's the 1ST card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", income_tax);
+            }
+        });
+        // Function to handle the redirection
+        function currency() {
+            window.location.href = 'currency.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(2)"); // Assuming it's the 2ND card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", currency);
+            }
+        });
+        // Function to handle the redirection
+        function CTCCalculator() {
+            window.location.href = 'CTC Calculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(3)"); // Assuming it's the 3RD card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", CTCCalculator);
+            }
+        });
+        // Function to handle the redirection
+        function Fixed_DepositCalculator() {
+            window.location.href = 'Fixed_DepositCalculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(4)"); // Assuming it's the 4th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", Fixed_DepositCalculator);
+            }
+        });
+        // Function to handle the redirection
+        function goToHomePage() {
+            window.location.href = 'income_tax.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(5)"); // Assuming it's the 5th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", RetirementPlanning);
+            }
+        });
+        // Function to handle the redirection
+        function RetirementPlanning() {
+            window.location.href = 'RetirementPlanning.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(6)"); // Assuming it's the 6th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", sipcalculator);
+            }
+        });
+        // Function to handle the redirection
+        function sipcalculator() {
+            window.location.href = 'sipcalculator.html';
+        }
+
+        // Adding event listener to the "Loan Eligibility Calculator" card
+        document.addEventListener("DOMContentLoaded", function () {
+            const loanEligibilityCard = document.querySelector(".calculator-grid .calculator-card:nth-child(1)"); // Assuming it's the 7th card
+            if (loanEligibilityCard) {
+                loanEligibilityCard.addEventListener("click", goToHomePage);
+            }
+        });
+    </script>
+</body>
+
+</html>
